@@ -9,9 +9,13 @@
                 href="{{ path('app_default_showtest', {'id': test.id}) }}">{{ test.name|upper }}</a>
 
         <button style="background-color: yellow; font-family: Lato; font-size: 25px"><a
-                    href="{{ path('app_default_modify', {'id': test.id}) }}">Modyfikuj</a></button>
+                    href="{{ path('app_default_modify', {'id': test.id}) }}">Dodaj pytanie</a></button>
+
 
     {% endfor %}
+    <br>
+    <button style="background-color: yellow; font-family: Lato; font-size: 25px"><a
+                href="{{ path('addtest') }}">Dodaj test</a></button>
 
 
 {% endblock %}

@@ -1,9 +1,40 @@
-{% block body %}
-    {% for test in tests %}
-        {{ test.name|upper }}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+</head>
+<body>
 
-        <button style="background-color: yellow; font-family: Lato; font-size: 25px"><a
-                    href="{{ path('app_default_form', {'id': test.id}) }}">Rozwiąż test</a></button>
-        <br>
-    {% endfor %}
+{% block body %}
+
+    <div>
+        Witaj!
+        Jesteś zalogowany jako: {{ user.username }}<br><br>
+    </div>
+
+
+    <div>Wybierz i rozwiąż test:<br>
+        {% for test in tests %}
+            {{ test.name|upper }}
+
+            <button style="background-color: yellow; font-family: Lato; font-size: 25px"><a
+                        href="{{ path('app_default_form', {'id': test.id}) }}">Rozwiąż test</a></button>
+            <br><br>
+        {% endfor %}
+    </div>
+    <button style="background-color: yellow; font-family: Lato; font-size: 25px"><a
+                href="{{ path('showresult') }}">Zobacz wyniki</a></button>
+    <div>
+
+    </div>
+
+
+
 {% endblock %}
+
+
+{% block javascripts %}{% endblock %}
+</body>
+</html>

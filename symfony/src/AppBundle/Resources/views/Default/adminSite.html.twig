@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+</head>
+<body>
+{% block body %}
+    {% if is_granted('ROLE_ADMIN') %}
+
+    Witaj admin :{{ user.username }}<br>
+        <button style="background-color: yellow; font-family: Lato; font-size: 25px"><a
+                    href="{{ path('fos_user_security_logout') }}">Wyloguj</a></button><br>
+
+    {{ render(controller('AppBundle:Default:showTests')) }}
+
+    {% endif %}
+{% endblock %}
+{% block javascripts %}{% endblock %}
+</body>
+</html>

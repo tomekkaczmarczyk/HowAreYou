@@ -34,6 +34,18 @@ class Questions
     private $test;
 
     /**
+     * @ORM\OneToMany(targetEntity="Answers", mappedBy="question")
+     */
+    private $answers;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="maxQ", type="integer")
+     */
+    private $maxQ;
+
+    /**
      * @return mixed
      */
     public function getTest()
@@ -49,23 +61,11 @@ class Questions
         $this->test = $test;
     }
 
-    /**
-     * @ORM\OneToMany(targetEntity="Answers", mappedBy="question")
-     */
-    private $answers;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="maxQ", type="integer")
-     */
-    private $maxQ;
-
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -88,7 +88,7 @@ class Questions
     /**
      * Get text
      *
-     * @return string 
+     * @return string
      */
     public function getText()
     {
@@ -111,12 +111,13 @@ class Questions
     /**
      * Get maxQ
      *
-     * @return integer 
+     * @return integer
      */
     public function getMaxQ()
     {
         return $this->maxQ;
     }
+
     /**
      * Constructor
      */
@@ -151,7 +152,7 @@ class Questions
     /**
      * Get answers
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getAnswers()
     {

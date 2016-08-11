@@ -1,9 +1,9 @@
 <p>
-<h1>{{ test.name }}</h1>
-
+{{ test.name }}<br>
 {% for question in questions %}
 Pytanie:{{ question.text }}
     Skala:{{ question.maxQ }}<br>
+
 {% endfor %}
 
 
