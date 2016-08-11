@@ -117,44 +117,4 @@ class Questions
     {
         return $this->maxQ;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->answers = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add answers
-     *
-     * @param \AppBundle\Entity\Answers $answers
-     * @return Questions
-     */
-    public function addAnswer(\AppBundle\Entity\Answers $answers)
-    {
-        $this->answers[] = $answers;
-
-        return $this;
-    }
-
-    /**
-     * Remove answers
-     *
-     * @param \AppBundle\Entity\Answers $answers
-     */
-    public function removeAnswer(\AppBundle\Entity\Answers $answers)
-    {
-        $this->answers->removeElement($answers);
-    }
-
-    /**
-     * Get answers
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getAnswers()
-    {
-        return $this->answers;
-    }
 }

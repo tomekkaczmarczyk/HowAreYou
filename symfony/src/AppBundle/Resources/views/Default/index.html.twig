@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+</head>
+<body>
+{% block body %}
+
+    <h1>NAZWA APLIKACJI</h1>
+    <div>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vel lacus scelerisque, iaculis lacus quis,
+        condimentum nisi. Maecenas ornare egestas velit, nec elementum orci gravida facilisis. Suspendisse rhoncus sit
+        amet risus bibendum egestas. In porttitor metus ut aliquam porttitor. Vestibulum risus tellus, viverra a elit
+        ut, vehicula efficitur sem. Quisque auctor elementum sagittis. Nunc id justo sit amet orci tincidunt faucibus.
+        Vestibulum tempor tristique diam. Phasellus tristique id diam id convallis. Maecenas at condimentum magna.
+        <br>
+        Sed suscipit ac risus bibendum tincidunt. Fusce tempor, sem eu hendrerit consectetur, nisi nunc vulputate elit,
+        sit amet cursus dui dui nec elit. Aliquam egestas laoreet tristique. Pellentesque mattis venenatis egestas. In
+        convallis tempor scelerisque. Nunc eget convallis risus, in tempus est. In hac habitasse platea dictumst. Duis
+        consectetur lectus elit, non consequat nisl dapibus eu. Morbi sagittis tellus ligula, eget dignissim justo
+        euismod eget. Pellentesque non nisi at tortor suscipit ultrices. Sed gravida magna quis aliquam iaculis. Morbi
+        metus elit, euismod ut urna sit amet, sodales tincidunt ipsum.
+
+    </div>
+    <ul>
+        <button style="background-color: yellow; font-family: Lato; font-size: 25px"><a
+                    href="{{ path('fos_user_security_login') }}">ZALOGUJ SIĘ</a></button>
+        <button style="background-color: yellow; font-family: Lato; font-size: 25px"><a
+                    href="{{ path('fos_user_registration_register') }}">ZAREJESTRUJ SIĘ</a></li></button>
+    </ul>
+
+
+{% endblock %}
+{% block javascripts %}{% endblock %}
+</body>
+</html>

@@ -27,7 +27,7 @@ class Answers
     private $question;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="answers");
+     * @ORM\OneToMany(targetEntity="User", mappedBy="answer");
      */
     private $user;
 
@@ -160,28 +160,5 @@ class Answers
     public function getQuestion()
     {
         return $this->question;
-    }
-
-    /**
-     * Add user
-     *
-     * @param \AppBundle\Entity\User $user
-     * @return Answers
-     */
-    public function addUser(\AppBundle\Entity\User $user)
-    {
-        $this->user[] = $user;
-
-        return $this;
-    }
-
-    /**
-     * Remove user
-     *
-     * @param \AppBundle\Entity\User $user
-     */
-    public function removeUser(\AppBundle\Entity\User $user)
-    {
-        $this->user->removeElement($user);
     }
 }

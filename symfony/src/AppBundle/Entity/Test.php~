@@ -71,37 +71,4 @@ class Test
     {
         return $this->name;
     }
-
-    /**
-     * Add questions
-     *
-     * @param \AppBundle\Entity\Questions $questions
-     * @return Test
-     */
-    public function addQuestion(\AppBundle\Entity\Questions $questions)
-    {
-        $this->questions[] = $questions;
-
-        return $this;
-    }
-
-    /**
-     * Remove questions
-     *
-     * @param \AppBundle\Entity\Questions $questions
-     */
-    public function removeQuestion(\AppBundle\Entity\Questions $questions)
-    {
-        $this->questions->removeElement($questions);
-    }
-
-    /**
-     * Get questions
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getQuestions()
-    {
-        return $this->questions;
-    }
 }

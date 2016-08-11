@@ -1,0 +1,9 @@
+{% block body %}
+    {% for test in tests %}
+        {{ test.name|upper }}
+
+        <button style="background-color: yellow; font-family: Lato; font-size: 25px"><a
+                    href="{{ path('app_default_form', {'id': test.id}) }}">Rozwiąż test</a></button>
+        <br>
+    {% endfor %}
+{% endblock %}

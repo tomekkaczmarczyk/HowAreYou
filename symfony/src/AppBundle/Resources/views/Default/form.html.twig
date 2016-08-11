@@ -1,0 +1,11 @@
+<form method="POST">
+    {{ test.name|upper }}<br>
+    {% for question in questions %}
+
+        {{ question.text }}<br>
+        {% for i in 1..10 %}
+            <input type="radio" name="answers[{{ question.id }}]" value="{{ i }}" />{{ i }}
+        {% endfor %}<br>
+    {% endfor %}
+    <input type="submit" value="Wyślij">
+</form>
