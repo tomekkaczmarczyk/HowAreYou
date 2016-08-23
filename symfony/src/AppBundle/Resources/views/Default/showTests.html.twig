@@ -1,15 +1,14 @@
-{% block title %}
-    Twoje Testy:<br>
-{% endblock %}
 
 {% block body %}
-
+Twoje testy:<br>
     {% for test in tests %}
         <div><a style="background-color: lightsalmon; font-family: Lato; font-size: 24px"
                 href="{{ path('app_default_showtest', {'id': test.id}) }}">{{ test.name|upper }}</a>
 
         <button style="background-color: yellow; font-family: Lato; font-size: 25px"><a
                     href="{{ path('app_default_modify', {'id': test.id}) }}">Dodaj pytanie</a></button>
+        {% block addquestion %}
+        {% endblock %}
 
 
     {% endfor %}

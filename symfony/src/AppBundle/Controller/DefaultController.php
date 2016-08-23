@@ -9,9 +9,11 @@ use AppBundle\Entity\Test;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\TestType;
 use AppBundle\Form\QuestionType;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
@@ -103,6 +105,86 @@ class DefaultController extends Controller
 
     }
 
+    /**
+     * @Route("usersite/showresult", name="showresult")
+     * @Template()
+     */
+    public function showResults(Request $request)
+    {
+        $tests = $this->getDoctrine()->getRepository("AppBundle:Test")->findAll();
+
+        $dateFrom = $request->query->get('dateFrom');
+        $dateTo = $request->query->get('dateTo');
+        $testId = $request->query->get('testId');
+
+
+        $em = $this->getDoctrine()->getManager();
+
+        $dql = <<<EOF
+SELECT q.text, AVG(a.points)
+FROM AppBundle:Answers a
+LEFT JOIN a.question q
+LEFT JOIN q.test t
+WHERE a.user = :userId AND :dateFrom <= a.date AND a.date <= :dateTo AND t.id = :testId
+GROUP BY q.id
+EOF;
+        $query = $em->createQuery($dql);
+        $query->setParameter('userId', $this->getUser()->getId());
+        $query->setParameter('dateTo', $dateTo);
+        $query->setParameter('dateFrom', $dateFrom);
+        $query->setParameter('testId', $testId);
+
+        $results = $query->getArrayResult();
+
+        return [
+            'tests' => $tests,
+            'testId' => $testId,
+            'results' => $results,
+            'dateTo'=>$dateTo,
+            'dateFrom'=>$dateFrom
+        ];
+    }
+
+    /**
+     * @Route("/usersite/download", name="download")
+     */
+    public function downloadAction(Request $request)
+    {
+        $dateFrom = $request->query->get('dateFrom');
+        $dateTo = $request->query->get('dateTo');
+        $testId = $request->query->get('testId');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $dql = <<<EOF
+SELECT q.text, AVG(a.points)
+FROM AppBundle:Answers a
+LEFT JOIN a.question q
+LEFT JOIN q.test t
+WHERE a.user = :userId AND :dateFrom <= a.date AND a.date <= :dateTo AND t.id = :testId
+GROUP BY q.id
+EOF;
+        $query = $em->createQuery($dql);
+        $query->setParameter('userId', $this->getUser()->getId());
+        $query->setParameter('dateTo', $request->query->get('dateTo'));
+        $query->setParameter('dateFrom', $request->query->get('dateFrom'));
+        $query->setParameter('testId', $request->query->get('testId'));
+        $results = $query->getArrayResult();
+
+        $fileName = 'Srednie wyniki z okresu od' . $dateFrom . 'do' . $dateTo . '.csv';
+
+        $fp = fopen($fileName, 'w');
+        foreach ($results as $row) {
+            fputcsv($fp, $row, ';');
+        }
+        fclose($fp);
+
+        $response = new Response(file_get_contents($fileName), Response::HTTP_OK, ['Content-Type' => 'text/csv']);
+        $response->headers->set('Content-Disposition', 'attachment; filename="' . $fileName . '";');
+
+        return $response;
+    }
+
 
     /**
      * @Route("/adminsite", name="adminsite")
@@ -133,38 +215,7 @@ class DefaultController extends Controller
         return ['tests' => $tests];
     }
 
-    /**
-     * @Route("/showresult", name="showresult")
-     * @Template()
-     */
-    public function showResults(Request $request)
-    {
-        $tests = $this->getDoctrine()->getRepository("AppBundle:Test")->findAll();
 
-        $em = $this->getDoctrine()->getManager();
-
-        $dql = <<<EOF
-SELECT q.text, AVG(a.points)
-FROM AppBundle:Answers a
-LEFT JOIN a.question q
-LEFT JOIN q.test t
-WHERE a.user = :userId AND :dateFrom <= a.date AND a.date <= :dateTo AND t.id = :testId
-GROUP BY q.id
-EOF;
-        $query = $em->createQuery($dql);
-        $query->setParameter('userId', $this->getUser()->getId());
-        $query->setParameter('dateTo', $request->query->get('dateTo'));
-        $query->setParameter('dateFrom', $request->query->get('dateFrom'));
-        $query->setParameter('testId', $request->query->get('testId'));
-
-        $results = $query->getArrayResult();
-
-
-        return [
-            'tests' => $tests,
-            'results' => $results
-        ];
-    }
 
 
 

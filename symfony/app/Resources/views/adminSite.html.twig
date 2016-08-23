@@ -2,13 +2,14 @@
 {% block body %}
     {% if is_granted('ROLE_ADMIN') %}
 
-    Witaj admin :{{ user.username }}<br>
+    Witaj admin :{{ app.user.username }}<br>
         <button style="background-color: yellow; font-family: Lato; font-size: 15px"><a
                     href="{{ path('fos_user_security_logout') }}">Wyloguj</a></button><br><br>
 
     {{ render(controller('AppBundle:Default:showTests')) }}
 
     {% endif %}
+    <br>
     {% block add %}
         {% endblock %}
 {% endblock %}
